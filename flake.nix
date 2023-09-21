@@ -15,11 +15,7 @@
     nixpkgs.follows = "haskell-nix/nixpkgs-unstable";
 
     # TODO: cleanup after cardano-node inputs are fixed
-    cardano-node = {
-      url = "github:input-output-hk/cardano-node/8.1.1";
-      inputs.cardano-node-workbench.follows = "blank";
-      inputs.node-measured.follows = "blank";
-    };
+    cardano-node.url = "github:input-output-hk/cardano-node/8.1.1";
     blank.url = "github:divnix/blank";
 
     # TODO: remove after new testnets land in cardano-node
@@ -61,9 +57,7 @@
         inherit system;
       };
 
-      # `static` enables cross-compilation with musl64 to produce a statically
-      # linked `ogmios` executable
-      projectFor = { system, static ? false }:
+      projectFor = { system }:
         let
           pkgs = nixpkgsFor system;
           src = nixpkgs.lib.cleanSourceWith {
@@ -77,7 +71,7 @@
 
         in
         import ./nix {
-          inherit src pkgs system static;
+          inherit src pkgs system;
           inputMap = {
             "https://input-output-hk.github.io/cardano-haskell-packages" = CHaP;
           };
@@ -87,19 +81,12 @@
     {
       flake = perSystem (system: (projectFor { inherit system; }).flake { });
 
-      flake-static = perSystem (system:
-        (projectFor { inherit system; static = true; }).flake { }
-      );
-
       defaultPackage = perSystem (system:
         self.flake.${system}.packages."ogmios:exe:ogmios"
       );
 
       packages = perSystem (system:
-        self.flake.${system}.packages // {
-          ogmios-static =
-            self.flake-static.${system}.packages."ogmios:exe:ogmios";
-        }
+        self.flake.${system}.packages
       );
 
       apps = perSystem (system:

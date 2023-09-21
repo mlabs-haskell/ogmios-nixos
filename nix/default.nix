@@ -1,15 +1,10 @@
 { src
 , pkgs
-, static
 , inputMap
 , ...
 }:
 
 let
-  musl64 = pkgs.pkgsCross.musl64;
-
-  pkgSet = if static then musl64 else pkgs;
-
   project = {
     inherit src inputMap;
 
@@ -65,19 +60,9 @@ let
         cardano-crypto-class.components.library.pkgconfig =
           pkgs.lib.mkForce [ [ pkgs.libsodium-vrf pkgs.secp256k1 ] ];
 
-      } // pkgs.lib.mkIf static {
-        ogmios.components.exes.ogmios.configureFlags = pkgs.lib.optionals
-          musl64.stdenv.hostPlatform.isMusl [
-          "--disable-executable-dynamic"
-          "--disable-shared"
-          "--ghc-option=-optl=-pthread"
-          "--ghc-option=-optl=-static"
-          "--ghc-option=-optl=-L${musl64.gmp6.override { withStatic = true; }}/lib"
-          "--ghc-option=-optl=-L${musl64.zlib.override { static = true; }}/lib"
-        ];
       };
     }];
 
   };
 in
-pkgSet.haskell-nix.cabalProject project
+pkgs.haskell-nix.cabalProject project

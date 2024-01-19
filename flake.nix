@@ -15,7 +15,7 @@
     nixpkgs.follows = "haskell-nix/nixpkgs-unstable";
 
     # TODO: cleanup after cardano-node inputs are fixed
-    cardano-node.url = "github:input-output-hk/cardano-node/8.1.1";
+    cardano-node.url = "github:input-output-hk/cardano-node/8.7.2";
     blank.url = "github:divnix/blank";
 
     # TODO: remove after new testnets land in cardano-node

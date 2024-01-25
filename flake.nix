@@ -136,19 +136,6 @@
         ];
       };
 
-      hydraJobs = {
-        required = (nixpkgsFor "x86_64-linux").stdenv.mkDerivation {
-          name = "required";
-          buildInputs = [
-            self.packages.x86_64-linux.ogmios-static
-            self.defaultPackage.x86_64-linux
-            self.devShell.x86_64-linux.buildInputs
-            self.check.x86_64-linux
-            self.nixosConfigurations.test.config.system.build.vm
-          ];
-          unpackPhase = "true";
-          installPhase = "mkdir $out";
-        };
-      };
+      herculesCI.ciSystems = [ "x86_64-linux" ];
     };
 }

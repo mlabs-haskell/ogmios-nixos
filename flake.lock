@@ -18361,11 +18361,11 @@
     "ogmios_3": {
       "flake": false,
       "locked": {
-        "lastModified": 1705061170,
-        "narHash": "sha256-MGDBvABOl1+fR90YaFBCbV0mYoLhQj24IjlDmZN9QxY=",
+        "lastModified": 1705944692,
+        "narHash": "sha256-2vSSSolca9sJ4jptoMroeEqROkmR+LAQUKxpCyq7zeM=",
         "owner": "CardanoSolutions",
         "repo": "ogmios",
-        "rev": "54e47dfe3f63d08b9039cffda649393c72438645",
+        "rev": "c1a2e301ad6a351db6c31040e249b81d14c7acc4",
         "type": "github"
       },
       "original": {

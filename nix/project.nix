@@ -14,11 +14,15 @@
       inputMap = {
         "https://input-output-hk.github.io/cardano-haskell-packages" = inputs.iogx.inputs.CHaP;
       };
-      modules = [
-        {
-          # FIXME ogmios unit tests are not passing
-          packages.ogmios.components.tests.unit.doCheck = false;
-        }
-      ];
+      #sha256map = {};
+      modules = [{
+        packages.cryptonite.flags.support_rdrand = false;
+        packages.bitvec.flags.simd = false;
+        packages.quickcheck-state-machine.flags.no-vendored-treediff = true;
+        packages.text.flags.simdutf = false;
+        packages.formatting.flags.no-double-conversion = true;
+        # FIXME ogmios unit tests are not passing
+        packages.ogmios.components.tests.unit.doCheck = false;
+      }];
     };
 }

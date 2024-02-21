@@ -19329,6 +19329,10 @@
         ],
         "cardano-world": "cardano-world",
         "iogx": "iogx",
+        "nixpkgs": [
+          "iogx",
+          "nixpkgs"
+        ],
         "ogmios": "ogmios_3"
       }
     },

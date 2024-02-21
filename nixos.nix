@@ -1,9 +1,10 @@
-{ inputs, lib, ... }:
+inputs: outputs:
 let
+  system = "x86_64-linux";
   # NixOS module for configuring Ogmios service.
-  ogmios = { config, lib, pkgs, ... }:
+  ogmios = { config, lib, ... }:
     let
-      inherit (lib) mkIf escapeShellArgs concatLists types;
+      inherit (lib) mkIf mkEnableOption mkOption escapeShellArgs concatLists types;
       cfg = config.services.ogmios;
     in
     {
@@ -13,7 +14,7 @@ let
         package = mkOption {
           description = "Ogmios package";
           type = package;
-          default = pkgs.ogmios;
+          default = outputs.packages.${system}.ogmios;
         };
 
 
@@ -170,8 +171,8 @@ let
 in
 {
   nixosModules = { inherit ogmios ogmios-test; };
-  nixosConfigurations.ogmios-test = lib.nixosSystem {
-    system = "x86_64-linux";
+  nixosConfigurations.ogmios-test = inputs.nixpkgs.lib.nixosSystem {
+    inherit system;
     modules = [
       inputs.cardano-node.nixosModules.cardano-node
       ogmios

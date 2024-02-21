@@ -169,16 +169,14 @@ let
     };
 in
 {
-  flake = {
-    nixosModules = { inherit ogmios ogmios-test; };
-    nixosConfigurations.ogmios-test = lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        inputs.cardano-node.nixosModules.cardano-node
-        ogmios
-        ogmios-test
-      ];
-    };
+  nixosModules = { inherit ogmios ogmios-test; };
+  nixosConfigurations.ogmios-test = lib.nixosSystem {
+    system = "x86_64-linux";
+    modules = [
+      inputs.cardano-node.nixosModules.cardano-node
+      ogmios
+      ogmios-test
+    ];
   };
 }
 

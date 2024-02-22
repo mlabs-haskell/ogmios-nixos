@@ -14,6 +14,9 @@
       inputMap = {
         "https://input-output-hk.github.io/cardano-haskell-packages" = inputs.iogx.inputs.CHaP;
       };
+      sha256map = {
+        "https://github.com/CardanoSolutions/cardano-ledger"."558cad41ef01a35ac62c28cf06e954fdfd790e28" = "Q1E+ZJ+DxjZTJny8LrpJHYXJafRbZAknDqAW7Rx0Mm8=";
+      };
       modules = [
         {
           # FIXME ogmios unit tests are not passing

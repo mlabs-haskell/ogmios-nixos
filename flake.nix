@@ -1,7 +1,23 @@
 {
   description = "Nix flake for ogmios";
   inputs = {
-    iogx.url = "github:input-output-hk/iogx";
+    # TODO remove hackage input as soon iogx catches up
+    hackage = {
+      url = "github:input-output-hk/hackage.nix";
+      flake = false;
+    };
+    # TODO remove CHaP as soon iogx catches up
+    CHaP = {
+      url = "github:IntersectMBO/cardano-haskell-packages?ref=repo";
+      flake = false;
+    };
+    iogx = {
+      url = "github:input-output-hk/iogx";
+      inputs = {
+        hackage.follows = "hackage";
+        CHaP.follows = "CHaP";
+      };
+    };
     nixpkgs.follows = "iogx/nixpkgs";
     cardano-world.url = "github:IntersectMBO/cardano-world";
     cardano-node.follows = "cardano-world/cardano-node";

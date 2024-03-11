@@ -135,6 +135,8 @@
         ];
       };
 
+      herculesCI.ciSystems = [ "x86_64-linux" "x86_64-darwin" ];
+
       hydraJobs = {
         required = (nixpkgsFor "x86_64-linux").stdenv.mkDerivation {
           name = "required";

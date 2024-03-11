@@ -24,20 +24,14 @@
       flake = false;
     };
 
-    iohk-nix = {
-      url = "github:input-output-hk/iohk-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    iohk-nix.follows = "cardano-node/iohkNix";
 
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
     };
 
-    CHaP = {
-      url = "github:input-output-hk/cardano-haskell-packages?ref=repo";
-      flake = false;
-    };
+    CHaP.follows = "cardano-node/CHaP";
   };
 
   outputs = { self, ogmios-src, nixpkgs, haskell-nix, iohk-nix, CHaP, ... }@inputs:
@@ -52,7 +46,12 @@
       perSystem = nixpkgs.lib.genAttrs defaultSystems;
 
       nixpkgsFor = system: import nixpkgs {
-        overlays = [ haskell-nix.overlay iohk-nix.overlays.crypto ];
+        overlays = [
+          iohk-nix.overlays.crypto
+          haskell-nix.overlay
+          iohk-nix.overlays.haskell-nix-crypto
+
+        ];
         inherit (haskell-nix) config;
         inherit system;
       };
